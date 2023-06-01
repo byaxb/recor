@@ -1,15 +1,10 @@
-#' Transitions among SNR,SNRdB, r and R^2
+#' Conversions among dB, SNR, R2, R
 #'
-#' @description
-#' transition between SNRdB and SNR
-#' 
-#' @param dB, Signal-to-Noise Ration in decibels
+#' @param dB, dB
 #' @details
-#' dB = 10*log10(SNR)
-#' SNR = 10^(db/10)
+#' See https://arxiv.org/abs/2205.04571 for details
 #' 
-#' 
-#' @return corresponding SNR of SNRdB
+#' @return SNR
 #' @export
 dB_to_SNR <- function(dB) {
     SNR <- 10^(dB/10)

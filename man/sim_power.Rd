@@ -2,44 +2,42 @@
 % Please edit documentation in R/sim_power.R
 \name{sim_power}
 \alias{sim_power}
-\title{Power Simulation in parallel}
+\title{Basic function for power analysis}
 \usage{
 sim_power(
   x_strs = "runif(512)",
   y_strs = c("y <- x", "y <- x^3"),
-  cor_strs = c("cor", "recor"),
+  cor_strs = three_cor_funs(),
   SNRs = dB_to_SNR(-50:50),
   nsim = 500,
   nround = 1,
-  ncores = NULL,
+  err_log = "err_log.rda",
   ...
 )
 }
 \arguments{
 \item{x_strs, }{the way to generate the independent variable x, with runif(512) as default}
 
-\item{y_strs, }{y_strs, monotonic or non monotonic scenarios}
+\item{y_strs, }{y_strs such as y <- x}
 
-\item{cor_strs, }{cor_fun_strs, correlation statistics}
+\item{cor_strs, }{cor_fun_strs, with the returns of three_cor_funs() as default}
 
 \item{SNRs, }{signal-to-noise ratio, with dB_to_SNR(-50:50) as default}
 
-\item{nsim, }{sample length, with 500 as default}
-
-\item{nround, }{number of simulation rounds, with 1 as default}
-
-\item{ncores, }{cluster specification}
+\item{nsim, }{times of null simulation, with 500 as default}
 }
 \value{
-simulation results in a tidy data.frame
+simulation results in a data.frame
 }
 \description{
-Power Simulation
+Basic function for power analysis
 }
 \details{
-x_strs: different sample size can be customized such as 
-x_strs = paste0("runif", 10*50:100)
+The core function for power analysis, 
+usually as a workhorse called by power_db()
 
-cor_strs: to calculate statistics such as dCor and MIC, energe and 
-minerva should be loaded first
+For efficiency, parallel computation is adopted here.
+
+The algorithm automatically detects how many logical cores can be employed,
+and parallel::detectCores() - 1 cores are actually used for this task.
 }

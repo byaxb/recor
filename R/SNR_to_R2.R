@@ -1,17 +1,11 @@
-#' Transitions among SNR,SNRdB, r and R^2
+#' Conversions among dB, SNR, R2, R
 #'
-#' @description
-#' transition between SNR and R^2
-#' 
-#' @param SNR, signal-to-noise ratio, a numeric vector
+#' @param SNR, SNR
 #' @details
+#' See https://arxiv.org/abs/2205.04571 for details
 #' 
-#' R2 <- SNR / (1 + SNR)
-#' SNR <- R2 / (1 - R2)
-#' 
-#' @return a vector of R2 values
+#' @return R2
 #' @export
 SNR_to_R2 <- function(SNR) {
-    R2 <- SNR / (1 + SNR)
-    return(R2)
+    SNR / (1 + SNR)
 }

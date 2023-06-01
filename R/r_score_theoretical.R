@@ -1,14 +1,11 @@
-#' Get the theoretical r scores with resepct to different SNRdB
+#' get the theoretical r scores regarding to different SNR / dB
 #'
 #' @description
-#' get the theoretical r scores with resepct to different SNRdB
 #' 
-#' @param dB, Signal-to-Noise Ration in decibels, with -50:50 as default
+#' @param dB, signal-to-noise ratio in decibels, with -50:50 as default
 #' @details
 #' r = sqrt(1 / (1 + 10^(-0.1dB)))
-#' 
-#' 
-#' @return theoretical r scores in a numeric vector 
+#' @return power, scalar value
 #' @export
 r_score_theoretical <- function(dB = -50:50) {
     data.frame(dB = dB,

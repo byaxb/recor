@@ -2,20 +2,19 @@
 % Please edit documentation in R/SNR_to_R2.R
 \name{SNR_to_R2}
 \alias{SNR_to_R2}
-\title{Transitions among SNR,SNRdB, r and R^2}
+\title{Conversions among dB, SNR, R2, R}
 \usage{
 SNR_to_R2(SNR)
 }
 \arguments{
-\item{SNR, }{signal-to-noise ratio, a numeric vector}
+\item{SNR, }{SNR}
 }
 \value{
-a vector of R2 values
+R2
 }
 \description{
-transition between SNR and R^2
+Conversions among dB, SNR, R2, R
 }
 \details{
-R2 <- SNR / (1 + SNR)
-SNR <- R2 / (1 - R2)
+See https://arxiv.org/abs/2205.04571 for details
 }

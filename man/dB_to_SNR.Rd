@@ -2,20 +2,19 @@
 % Please edit documentation in R/dB_to_SNR.R
 \name{dB_to_SNR}
 \alias{dB_to_SNR}
-\title{Transitions among SNR,SNRdB, r and R^2}
+\title{Conversions among dB, SNR, R2, R}
 \usage{
 dB_to_SNR(dB)
 }
 \arguments{
-\item{dB, }{Signal-to-Noise Ration in decibels}
+\item{dB, }{dB}
 }
 \value{
-corresponding SNR of SNRdB
+SNR
 }
 \description{
-transition between SNRdB and SNR
+Conversions among dB, SNR, R2, R
 }
 \details{
-dB = 10*log10(SNR)
-SNR = 10^(db/10)
+See https://arxiv.org/abs/2205.04571 for details
 }

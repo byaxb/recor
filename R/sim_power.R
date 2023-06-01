@@ -1,39 +1,37 @@
-#' Power Simulation in parallel
+#' Basic function for power analysis
 #'
 #' @description
-#' Power Simulation
-#' 
+#' Basic function for power analysis
 #' @param x_strs, the way to generate the independent variable x, with runif(512) as default
-#' @param y_strs, y_strs, monotonic or non monotonic scenarios
-#' @param cor_strs, cor_fun_strs, correlation statistics
+#' @param y_strs, y_strs such as y <- x
+#' @param cor_strs, cor_fun_strs, with the returns of three_cor_funs() as default
 #' @param SNRs, signal-to-noise ratio, with dB_to_SNR(-50:50) as default
-#' @param nsim, sample length, with 500 as default
-#' @param nround, number of simulation rounds, with 1 as default
-#' @param ncores, cluster specification 
+#' @param nsim, times of null simulation, with 500 as default
 #' @details
-#' x_strs: different sample size can be customized such as 
-#' x_strs = paste0("runif", 10*50:100)
+#' The core function for power analysis, 
+#' usually as a workhorse called by power_db()
 #' 
-#' cor_strs: to calculate statistics such as dCor and MIC, energe and 
-#' minerva should be loaded first
+#' For efficiency, parallel computation is adopted here.
 #' 
+#' The algorithm automatically detects how many logical cores can be employed,
+#' and parallel::detectCores() - 1 cores are actually used for this task.
 #' 
-#' @return simulation results in a tidy data.frame
+#' @return simulation results in a data.frame
+#' @import byaxb
+#' @import parallel
 #' @export
 sim_power <- function(x_strs = 'runif(512)',
                       y_strs = c("y <- x", 'y <- x^3'),
-                      cor_strs = c("cor", "recor"),
+                      cor_strs = three_cor_funs(),
                       SNRs = dB_to_SNR(-50:50),
                       nsim = 500,
                       nround = 1,
-                      ncores = NULL,
+                      err_log = "err_log.rda",
                       ...) {
     conflict_prefer('%:%', 'foreach', quiet = TRUE)
+    conflict_prefer('detectCores', 'parallel', quiet = TRUE)
     timeit('new')
-    if(is.null(ncores)) {
-        ncores <- parallel::detectCores() - 1
-    }
-    cl <- makeCluster(ncores)
+    cl <- makeCluster(detectCores() - 1)
     registerDoSNOW(cl)
     
     pb <- txtProgressBar(
@@ -55,35 +53,35 @@ sim_power <- function(x_strs = 'runif(512)',
                 .multicombine = TRUE,
                 .combine = "rbind",
                 .inorder = TRUE,
-                .packages = c("recor")
+                .packages = c("recor", "byaxb")
         ) %:%
         foreach(
             cur_sim_idx = 1:nsim,
             .multicombine = TRUE,
             .combine = "rbind",
             .inorder = TRUE,
-            .packages = c("recor")
+            .packages = c("recor", "byaxb")
         ) %:%
         foreach(
             cur_x_str = x_strs,
             .multicombine = TRUE,
             .combine = "rbind",
             .inorder = TRUE,
-            .packages = c("recor")
+            .packages = c("recor", "byaxb")
         ) %:%
         foreach(
             cur_SNR = SNRs,
             .multicombine = TRUE,
             .combine = "rbind",
             .inorder = TRUE,
-            .packages = c("recor")
+            .packages = c("recor", "byaxb")
         ) %:%
         foreach(
             cur_y_str = y_strs,
             .multicombine = TRUE,
             .combine = "rbind",
             .inorder = TRUE,
-            .packages = c("recor")
+            .packages = c("recor", "byaxb")
         ) %:%
         foreach(
             cur_cor = cor_strs,
@@ -91,22 +89,45 @@ sim_power <- function(x_strs = 'runif(512)',
             .combine = "rbind",
             .inorder = TRUE,
             .options.snow = opts,
-            .packages = c("recor")
+            .packages = c("recor", "byaxb")
         )%dopar% {
-            x <- eval_code_str(cur_x_str)
-            y_hat <- eval_code_str(cur_y_str)
-            y <- get_noised_y(y_hat, cur_SNR)
-            alternative <- do.call(cur_cor, list(x = x, y = y))
-            x <- eval_code_str(cur_x_str)
-            null <- do.call(cur_cor, list(x = x, y = y))
-            return(cbind(round_idx = cur_round_idx,
-                         sim_idx = cur_sim_idx,
-                         x_str = cur_x_str,
-                         y_str = cur_y_str,
-                         SNR = cur_SNR,
-                         cor_type = cur_cor,
-                         cor_alternative = alternative,
-                         cor_null = null))
+            cur_cell <- tryCatch(expr = {
+                x <- eval_code_str(cur_x_str)
+                y_hat <- eval_code_str(cur_y_str)
+                y <- get_noised_y(y_hat, cur_SNR)
+                y <- as.numeric(y)
+                alternative <- do.call(cur_cor, list(x = x, y = y))
+                x <- eval_code_str(cur_x_str)
+                null <- do.call(cur_cor, list(x = x, y = y))
+                data.frame(
+                    round_idx = cur_round_idx,
+                    sim_idx = cur_sim_idx,
+                    x_str = cur_x_str,
+                    y_str = cur_y_str,
+                    SNR = cur_SNR,
+                    cor_type = cur_cor,
+                    cor_alternative = alternative,
+                    cor_null = null)
+            }, error = function(err) {
+                #save error status
+                save(
+                    cur_round_idx, cur_sim_idx, 
+                    cur_x_str, cur_y_str, 
+                    cur_SNR, cur_cor,
+                    x, y_hat, y,
+                    file = add_time_ext(err_log))
+                #return NA
+                data.frame(
+                    round_idx = cur_round_idx,
+                    sim_idx = cur_sim_idx,
+                    x_str = cur_x_str,
+                    y_str = cur_y_str,
+                    SNR = cur_SNR,
+                    cor_type = cur_cor,
+                    cor_alternative = NA,
+                    cor_null = NA)
+            })
+            return(cur_cell)
         }
     
     sim_results %>%

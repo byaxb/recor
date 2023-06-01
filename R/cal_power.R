@@ -1,28 +1,26 @@
-#' Calculate the power of correlation statistics
+#' Calculate the power
 #'
 #' @description
-#' Power calculation on the results of power analysis
-#' @param power_analysis_df, data.frame, the result of sim_power()
-#' @param alpha, the type I alpha, with 0.95 as default
+#' Power calculation on the basis of the results of power analysis
+#' @param power_df, data.frame, the result of sim_power()
+#' @param alpha, the power threshold, with 1-0.05 = 0.95 as default 
 #' @details
-#' The empirical power at type I error level alpha=0.95 is calculated as 
+#' The empirical power at type I error level alpha=0.05 is calculated as 
 #' the fraction of dependent variable pairs yielding a statistic value 
 #' greater than 95% of the values yielded by the independent variable pairs.
+#' 
+#' Here, alpha should be set as 0.95 rather than 0.05
 #'
-#' @return power data.frame
+#' @return a data.frame
 #' @export
-cal_power <- function(power_analysis_df, alpha = 0.95) {
+cal_power <- function(power_df, alpha = 0.95) {
     if(alpha <=0 || alpha >= 1) {
         cat("Invalid alpha. Reset as 0.95")
         alpha <- 0.95
     }
-    power_analysis_df %>%
-        as.data.frame() %>%
-        group_by(x_str, y_str, SNRdB, cor_type) %>%
-        summarise(power = sum(cor_alternative >= 
-                                  quantile(cor_null, 
-                                           alpha, 
-                                           na.rm = TRUE))/n()) -> power_df
-    return(power_df)
+    power_df <- as.data.table(power_df)
+    return(power_df[,
+                    by = .(round_idx, y_str,SNR, cor_type),
+                    .(power = mean(abs(cor_alternative) >= quantile(abs(cor_null), alpha, na.rm = TRUE)))])
+    
 }
-

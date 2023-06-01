@@ -2,23 +2,25 @@
 % Please edit documentation in R/cal_power.R
 \name{cal_power}
 \alias{cal_power}
-\title{Calculate the power of correlation statistics}
+\title{Calculate the power}
 \usage{
-cal_power(power_analysis_df, alpha = 0.95)
+cal_power(power_df, alpha = 0.95)
 }
 \arguments{
-\item{power_analysis_df, }{data.frame, the result of sim_power()}
+\item{power_df, }{data.frame, the result of sim_power()}
 
-\item{alpha, }{the type I alpha, with 0.95 as default}
+\item{alpha, }{the power threshold, with 1-0.05 = 0.95 as default}
 }
 \value{
-power data.frame
+a data.frame
 }
 \description{
-Power calculation on the results of power analysis
+Power calculation on the basis of the results of power analysis
 }
 \details{
-The empirical power at type I error level alpha=0.95 is calculated as 
+The empirical power at type I error level alpha=0.05 is calculated as 
 the fraction of dependent variable pairs yielding a statistic value 
 greater than 95% of the values yielded by the independent variable pairs.
+
+Here, alpha should be set as 0.95 rather than 0.05
 }

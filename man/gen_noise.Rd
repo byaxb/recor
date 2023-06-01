@@ -2,9 +2,9 @@
 % Please edit documentation in R/gen_noise.R
 \name{gen_noise}
 \alias{gen_noise}
-\title{Generate noise for certain signal at certain SNR}
+\title{Generate noise with certain SNR}
 \usage{
-gen_noise(y_hat, SNR = dB_to_SNR(0))
+gen_noise(y_hat, SNR = 2)
 }
 \arguments{
 \item{y_hat, }{pure signal, or the value of y_hat = f(x)}
@@ -12,21 +12,21 @@ gen_noise(y_hat, SNR = dB_to_SNR(0))
 \item{SNR, }{signal-to-noise ratio, with dB_to_SNR(0) as default}
 }
 \value{
-noise, a numeric vector of the same length with signal
+noise, a numeric vector
 }
 \description{
-generate noise for certain signal at certain SNR
+generate noise for certain signal on certain SNR
 }
 \details{
 SNR is defined as follows:
 SNR = var(y_hat) / var(noise)
 
 signal: y_hat, f(x)
-noise: Gaussian noise, noise~k*N(0, 1)
+noise: usually gaussian noise, noise~k*N(0, 1)
 
 SNR should always be positive
 
-if SNR <= 0, it will be repalced by .Machine$double.eps
+if SNR <= 0, it will be replaced by .Machine$double.eps
 
 if SNR is NA, it will be replaced by Inf
 
@@ -34,6 +34,7 @@ when SNR is Inf, noise will be zero-vectors, that is, no noise
 
 SNR can be calculated with dB_to_SNR:
 
-For example, dB_to_SNR(20) = 100 which means SNR=var(signal)/var(noise)=100 <=> 20dB
-For another example, dB_to_SNR(0) = 1 which means var(signal) == var(noise)
+For example, dB_to_SNR(20) = 100 which means \eqn{SNR=var(signal)/var(noise)=100} <=> 20dB
+
+For another example, dB_to_SNR(0) = 1 which means \eqn{var(signal) == var(noise)}
 }

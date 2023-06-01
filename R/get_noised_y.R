@@ -1,18 +1,16 @@
-#' Generate noised y with certain SNR
+#' Get noised y
 #'
 #' @description
-#' generate noise for certain signal at certain SNR
-#' 
-#' @param y_hat, signal, y_hat = f(x)
-#' @param SNR, Signal-to-Noise Ration
-#' @param dB, Signal-to-Noise Ration in decibels
-#' @details
-#' noise signal = signal + noise
-#'
+#' Get noised y with certain SNR
+#' @param y_hat, signal
+#' @param SNR, signal-to-noise rate
+#' @details 
+#' The noised y is calculated in the following way:
 #' y = y_hat + noise
-#'
-#'
-#' @return noised y, i.e., f(x) + noise
+#' 
+#' Either SNR or dB should be set to control the noise level.
+#' 
+#' @return power, scalar value
 #' @export
 get_noised_y <- function(y_hat, SNR = 1, dB = NULL) {
     if(!is.null(dB)) {
@@ -20,9 +18,6 @@ get_noised_y <- function(y_hat, SNR = 1, dB = NULL) {
     }
     noise_to_be_added <- gen_noise(y_hat, SNR)
     y_noised <- y_hat + noise_to_be_added
-    attr(y_noised, 'k') <- attr(noise_to_be_added, 'k')
-    attr(y_noised, 'SNR') <- attr(noise_to_be_added, 'SNR')
-    attr(y_noised, 'noise') <- noise_to_be_added
     return(y_noised)
 }
 

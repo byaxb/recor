@@ -2,9 +2,9 @@
 % Please edit documentation in R/recor.R
 \name{recor}
 \alias{recor}
-\title{REarrangement-type CORrelation - the adjusted r}
+\title{Rearrangement correlation}
 \usage{
-recor(x, y)
+recor(x, y, method = "cor_pearson")
 }
 \arguments{
 \item{x, }{numeric vector}
@@ -12,12 +12,18 @@ recor(x, y)
 \item{y, }{numeric vector}
 }
 \value{
-numeric vector of length one
+correlation coefficients
 }
 \description{
-correlation based on rearrangement covariance - the adjusted r
+to adjust the underestimation for monotonic dependence
 }
 \details{
-the adjusted r is defined as 
-cov(x, y) / abs(cov_rearrangement(x, y))
+This function is able to sharpen arbitrary correlation 
+which is sensitive to monotonicity,
+providing a simple and unified interface.
+
+However, it is at the cost of efficiency.
+
+For example, recor dcor will takes twice the time 
+as dcov2d(x, y) / dcov2d(x_up, y_updown).
 }

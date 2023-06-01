@@ -2,18 +2,18 @@
 % Please edit documentation in R/r_score_theoretical.R
 \name{r_score_theoretical}
 \alias{r_score_theoretical}
-\title{Get the theoretical r scores with resepct to different SNRdB}
+\title{get the theoretical r scores regarding to different SNR / dB}
 \usage{
 r_score_theoretical(dB = -50:50)
 }
 \arguments{
-\item{dB, }{Signal-to-Noise Ration in decibels, with -50:50 as default}
+\item{dB, }{signal-to-noise ratio in decibels, with -50:50 as default}
 }
 \value{
-theoretical r scores in a numeric vector
+power, scalar value
 }
 \description{
-get the theoretical r scores with resepct to different SNRdB
+get the theoretical r scores regarding to different SNR / dB
 }
 \details{
 r = sqrt(1 / (1 + 10^(-0.1dB)))

@@ -1,24 +1,36 @@
-#' REarrangement-type CORrelation - the adjusted r
+#' Rearrangement correlation
 #'
 #' @description
-#' correlation based on rearrangement covariance - the adjusted r
-#' 
+#' to adjust the underestimation for monotonic dependence 
 #' @param x, numeric vector
 #' @param y, numeric vector
 #' @details
-#' the adjusted r is defined as 
-#' cov(x, y) / abs(cov_rearrangement(x, y))
+#' This function is able to sharpen arbitrary correlation 
+#' which is sensitive to monotonicity,
+#' providing a simple and unified interface.
+#' 
+#' However, it is at the cost of efficiency.
+#' 
+#' For example, recor dcor will takes twice the time 
+#' as dcov2d(x, y) / dcov2d(x_up, y_updown).
 #'
-#' @return numeric vector of length one
+#' @return correlation coefficients
+#' @import coop
+#' @import Rfast
 #' @export
-recor <- function(x, y) {
-    numerator <- cov(x, y)
-    if(numerator >= 0) {
-        denominator <- abs(cov(sort(x, decreasing = FALSE), 
-                               sort(y, decreasing = FALSE)))
-    } else {
-        denominator <- abs(cov(sort(x, decreasing = FALSE), 
-                               sort(y, decreasing = TRUE)))
-    }
-    return(numerator / denominator)
+recor <- function(x, y, method = "cor_pearson") {
+    cor_value <- tryCatch(expr = {
+        numerator <- do.call(method, list(x = x, y = y))
+        if(covar(x, y) >= 0) {
+            denominator <- do.call(method,
+                                   list(x = Sort(x, descending = FALSE),
+                                        y = Sort(y, descending = FALSE)))
+        } else {
+            denominator <- do.call(method,
+                                   list(x = Sort(x, descending = FALSE),
+                                        y = Sort(y, descending = TRUE)))
+        }
+        numerator / abs(denominator)
+    }, error = function(err) {NA})
+    return(cor_value)
 }
