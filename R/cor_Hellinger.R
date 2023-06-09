@@ -3,8 +3,6 @@
 #' @description
 #' A wrapper of HellCor::HellCor
 #' Empirical value of the Hellinger correlation between two continuous random variables.
-#' @usage
-#' cor_ball(x, y)
 #' @param x, numeric vector
 #' @param y, numeric vector
 #' @details
