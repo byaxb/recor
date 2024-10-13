@@ -4,9 +4,7 @@
 #' @param pdir, the path storing the powerdf rda files
 #' @details
 #' 
-#' byaxb::load_all is called
-#' 
-#' A list including three parts, power_df.90, .95 and .99 will be returned
+#' load_all() is called, and a list including three parts, power_df.90, .95 and .99 will be returned
 #' 
 #' @return a list
 #' @export

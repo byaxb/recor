@@ -16,5 +16,6 @@ R2
 Conversions among dB, SNR, R2, R
 }
 \details{
-See https://arxiv.org/abs/2205.04571 for details
+Details are described in the manuscript, 
+which is available at https://arxiv.org/abs/2205.04571
 }

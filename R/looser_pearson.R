@@ -1,4 +1,4 @@
-#' loose version of Pearson's r
+#' Loose version of Pearson's r
 #'
 #' @description
 #' loose version of Pearson's r

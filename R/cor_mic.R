@@ -1,4 +1,4 @@
-#' Maximal Information Coefficient
+#' Maximal information coefficient
 #'
 #' @description
 #' A wrapper for minerva::mine_stat(x, y, measure = 'mic')

@@ -7,7 +7,8 @@
 accuracy_analysis(
   x_strs = "runif(512)",
   y_strs = c("y <- x", "y <- x^3"),
-  cor_strs = three_cor_funs(),
+  cor_strs = c("loose_pearson", "cor_pearson", "sharp_pearson", "cor_spearman",
+    "cor_kendall", "cor_dhsic", "cor_dcor", "cor_mic", "cor_xicor"),
   SNRs = dB_to_SNR(-50:50),
   nround = 10,
   ...
@@ -18,7 +19,7 @@ accuracy_analysis(
 
 \item{y_strs, }{scenarios, with c("y <- x", 'y <- x^3') as default}
 
-\item{cor_strs, }{correlation functions, with three_cor_funs() as default}
+\item{cor_strs, }{correlation function names}
 
 \item{SNRs, }{noise levels, with dB_to_SNR(-50:50) as default}
 

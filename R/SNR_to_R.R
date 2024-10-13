@@ -2,7 +2,9 @@
 #'
 #' @param SNR, SNR
 #' @details
-#' See https://arxiv.org/abs/2205.04571 for details
+#' Details are described in the manuscript, 
+#' which is available at https://arxiv.org/abs/2205.04571
+#' 
 #' 
 #' @return R
 #' @export

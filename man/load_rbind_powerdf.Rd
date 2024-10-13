@@ -16,7 +16,5 @@ a list
 load several powerdf rda files all at once and rbind the power_df into a list
 }
 \details{
-byaxb::load_all is called
-
-A list including three parts, power_df.90, .95 and .99 will be returned
+load_all() is called, and a list including three parts, power_df.90, .95 and .99 will be returned
 }

@@ -2,17 +2,13 @@
 % Please edit documentation in R/colors_science.R
 \name{science_colours_six}
 \alias{science_colours_six}
-\title{Colors}
+\title{Colors popular in Science}
 \usage{
 science_colours_six()
 }
 \value{
-colors
+a string vector
 }
 \description{
-Colors
-}
-\details{
-Some colors used in paper: 
-https://arxiv.org/abs/2205.04571
+Colors popular in the Science
 }

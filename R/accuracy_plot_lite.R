@@ -1,12 +1,12 @@
-#' Accuracy Analysis Plot
+#' Accuracy analysis plot
 #'
 #' @description
 #' plot the results of accuracy analysis with ggplot2
 #' @param accuracy_results, accuracy results form accuracy_db()
 #' @param cor_types, correlation names
 #' @param anchor_colors, colors
-#' @param supported_cor_types, different types of functions, such as x^k (several k)
-#' @param supported_cor_exprs, noise levels, with dB_to_SNR(0:100) as default
+#' @param supported_cor_types, supported correlation types, as the levels of cor_types
+#' @param supported_cor_exprs, the expressions of supported correlation types
 #' @param mae_txt_format, the MAE text format
 #' @param direction, the direction for facet_wrap, with "v" as default
 #' @param n_row, number of rows for facet_wrap
@@ -20,7 +20,6 @@
 #'   \item Call accuracy_plot_lite() to draw the figures
 #' }
 #' 
-#' See more details at https://arxiv.org/abs/2205.04571
 #' 
 #' 
 #' 

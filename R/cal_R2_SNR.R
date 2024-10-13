@@ -1,6 +1,7 @@
-#' calculate R2 with certain y_hat and y
+#' Calculate R2 with certain y_hat and y
 #'
 #' @description
+#' calculate R2 with certain y_hat and y
 #' 
 #' @usage
 #' cal_R2_SNR()

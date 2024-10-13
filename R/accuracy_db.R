@@ -14,7 +14,6 @@
 #'   \item Call accuracy_plot_lite() to draw the figures
 #' }
 #' 
-#' See more details at https://arxiv.org/abs/2205.04571
 #' 
 #' scenario_type = "accuracy", 50 monotonic functions along with 
 #' 16 nonmonotonic scenarios are taken into consideration.

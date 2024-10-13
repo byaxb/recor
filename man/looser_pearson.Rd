@@ -2,7 +2,7 @@
 % Please edit documentation in R/looser_pearson.R
 \name{looser_pearson}
 \alias{looser_pearson}
-\title{loose version of Pearson's r}
+\title{Loose version of Pearson's r}
 \usage{
 looser_pearson(x, y)
 }

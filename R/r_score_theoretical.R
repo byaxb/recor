@@ -1,6 +1,7 @@
-#' get the theoretical r scores regarding to different SNR / dB
+#' To get the theoretical r scores regarding to different SNR / dB
 #'
 #' @description
+#' To get the theoretical r scores regarding to different SNR / dB
 #' 
 #' @param dB, signal-to-noise ratio in decibels, with -50:50 as default
 #' @details

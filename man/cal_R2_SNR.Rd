@@ -2,7 +2,7 @@
 % Please edit documentation in R/cal_R2_SNR.R
 \name{cal_R2_SNR}
 \alias{cal_R2_SNR}
-\title{calculate R2 with certain y_hat and y}
+\title{Calculate R2 with certain y_hat and y}
 \usage{
 cal_R2_SNR()
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/cor_mic.R
 \name{cor_mic}
 \alias{cor_mic}
-\title{Maximal Information Coefficient}
+\title{Maximal information coefficient}
 \usage{
 cor_mic(x, y)
 }

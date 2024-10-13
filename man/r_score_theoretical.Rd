@@ -2,7 +2,7 @@
 % Please edit documentation in R/r_score_theoretical.R
 \name{r_score_theoretical}
 \alias{r_score_theoretical}
-\title{get the theoretical r scores regarding to different SNR / dB}
+\title{To get the theoretical r scores regarding to different SNR / dB}
 \usage{
 r_score_theoretical(dB = -50:50)
 }
@@ -13,7 +13,7 @@ r_score_theoretical(dB = -50:50)
 power, scalar value
 }
 \description{
-get the theoretical r scores regarding to different SNR / dB
+To get the theoretical r scores regarding to different SNR / dB
 }
 \details{
 r = sqrt(1 / (1 + 10^(-0.1dB)))

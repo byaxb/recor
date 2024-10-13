@@ -2,7 +2,7 @@
 % Please edit documentation in R/cor_dcor.R
 \name{cor_dcor}
 \alias{cor_dcor}
-\title{Distance Correlation Coefficient}
+\title{Distance correlation coefficient}
 \usage{
 cor_dcor(x, y)
 }

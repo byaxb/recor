@@ -13,7 +13,6 @@
 #'   \item Call accuracy_plot_lite() to draw the figures
 #' }
 #' 
-#' See more details at https://arxiv.org/abs/2205.04571
 #' 
 #' load_rbind.data.table() all possible accuracy_db() files into a whole
 #' 

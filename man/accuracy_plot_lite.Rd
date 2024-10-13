@@ -2,7 +2,7 @@
 % Please edit documentation in R/accuracy_plot_lite.R
 \name{accuracy_plot_lite}
 \alias{accuracy_plot_lite}
-\title{Accuracy Analysis Plot}
+\title{Accuracy analysis plot}
 \usage{
 accuracy_plot_lite(
   accuracy_results,
@@ -24,9 +24,9 @@ accuracy_plot_lite(
 
 \item{anchor_colors, }{colors}
 
-\item{supported_cor_types, }{different types of functions, such as x^k (several k)}
+\item{supported_cor_types, }{supported correlation types, as the levels of cor_types}
 
-\item{supported_cor_exprs, }{noise levels, with dB_to_SNR(0:100) as default}
+\item{supported_cor_exprs, }{the expressions of supported correlation types}
 
 \item{mae_txt_format, }{the MAE text format}
 
@@ -49,6 +49,4 @@ The workflow for complete accuracy analysis is as follows:
   \item Call accuracy_results_frm_db() to generate the accuracy results data.frame
   \item Call accuracy_plot_lite() to draw the figures
 }
-
-See more details at https://arxiv.org/abs/2205.04571
 }

@@ -1,4 +1,4 @@
-#' Distance Correlation Coefficient
+#' Distance correlation coefficient
 #'
 #' @description
 #' A wrapper for energy::dcor
