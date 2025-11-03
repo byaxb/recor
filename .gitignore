@@ -1,0 +1,18 @@
+# R 相关
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+
+# 构建文件
+*.tar.gz
+*.Rcheck/
+recor.Rcheck/
+
+# 编译文件
+src/*.o
+src/*.so
+src/*.dll
+
+# 文档生成临时文件
+man/.*.Rd

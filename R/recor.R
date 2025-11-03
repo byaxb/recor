@@ -1,36 +1,129 @@
-#' Rearrangement correlation
+#' Rearrangement Correlation (r#)
 #'
 #' @description
-#' to adjust the underestimation for monotonic dependence 
-#' @param x, numeric vector
-#' @param y, numeric vector
-#' @details
-#' This function is able to sharpen arbitrary correlation 
-#' which is sensitive to monotonicity,
-#' providing a simple and unified interface.
-#' 
-#' However, it is at the cost of efficiency.
-#' 
-#' For example, recor dcor will takes twice the time 
-#' as dcov2d(x, y) / dcov2d(x_up, y_updown).
+#' Computes the rearrangement correlation coefficient (r#), an adjusted version of Pearson's
+#' correlation coefficient that addresses the underestimation problem for monotonic dependence.
+#' This coefficient captures arbitrary monotone relationships (both linear and nonlinear) while
+#' reverting to Pearson's r in linear scenarios. The rearrangement correlation is derived from
+#' a tighter inequality than the classical Cauchy-Schwarz inequality, providing sharper bounds
+#' and expanded capture range.
 #'
-#' @return correlation coefficients
-#' @import coop
-#' @import Rfast
+#' @param x A numeric vector, matrix, or data frame.
+#' @param y NULL (default) or a vector, matrix, or data frame with compatible dimensions to x.
+#'
+#' @details
+#' The rearrangement correlation coefficient is based on rearrangement inequality theorems that
+#' provide tighter bounds than the Cauchy-Schwarz inequality. Mathematically, for samples x and y,
+#' it is defined as:
+#'
+#' \deqn{r^\#(x, y) = \frac{s_{x,y}}{\left| s_{x^\uparrow, y^\ddagger} \right|}}
+#'
+#' where:
+#' \itemize{
+#'   \item \eqn{s_{x,y}} is the sample covariance between x and y
+#'   \item \eqn{x^\uparrow} is the increasing rearrangement of x
+#'   \item \eqn{y^\ddagger} is either \eqn{y^\uparrow} (increasing rearrangement) if \eqn{s_{x,y} \geq 0}
+#'         or \eqn{y^\downarrow} (decreasing rearrangement) if \eqn{s_{x,y} < 0}
+#' }
+#'
+#' Key properties of the rearrangement correlation:
+#' \itemize{
+#'   \item \eqn{|r^\#| \leq 1} with equality if and only if x and y are monotone dependent
+#'   \item \eqn{|r^\#| \geq |r|} with equality when y is a permutation of \eqn{ax + b}
+#'         (i.e., linear relationship)
+#'   \item More accurate than classical coefficients for nonlinear monotone dependence
+#'         (MAE = 0.060 in simulations)
+#'   \item Reverts to Pearson's r for linear relationships
+#'   \item Handles various input types consistently with \code{stats::cor()}
+#' }
+#'
+#' The function automatically handles different input combinations:
+#' \itemize{
+#'   \item If x is a vector and y is a vector: returns a single correlation value
+#'   \item If x is a matrix/data.frame and y is NULL: returns correlation matrix between columns of x
+#'   \item If x and y are both matrices/data.frames: returns correlation matrix between columns of x and y
+#' }
+#'
+#' @return
+#' A numeric value or matrix containing the rearrangement correlation coefficient(s):
+#' \itemize{
+#'   \item Single correlation value if x and y are vectors
+#'   \item Correlation matrix if x is a matrix/data.frame (symmetric if y is NULL,
+#'         rectangular if y is provided)
+#' }
+#'
+#' @references
+#' Ai, X. (2024). Adjust Pearson's r to Measure Arbitrary Monotone Dependence.
+#' In \emph{Advances in Neural Information Processing Systems} (Vol. 37, pp. 37385-37407).
+#' \url{https://proceedings.neurips.cc/paper_files/paper/2024/file/41c38a83bd97ba28505b4def82676ba5-Paper-Conference.pdf}
+#'
+#' @examples
+#' # Vector example (perfect linear relationship)
+#' x <- c(1, 2, 3, 4, 5)
+#' y <- c(2, 4, 6, 8, 10)
+#' recor(x, y) # Returns 1.0
+#'
+#' # Nonlinear monotone relationship
+#' x <- c(1, 2, 3, 4, 5)
+#' y <- c(1, 4, 9, 16, 25) # y = x^2
+#' recor(x, y) # Higher value than Pearson's r
+#'
+#' # Matrix example
+#' set.seed(123)
+#' mat <- matrix(rnorm(100), ncol = 5)
+#' colnames(mat) <- LETTERS[1:5]
+#' recor(mat) # 5x5 correlation matrix
+#'
+#' # Two matrices
+#' mat1 <- matrix(rnorm(50), ncol = 5)
+#' mat2 <- matrix(rnorm(50), ncol = 5)
+#' recor(mat1, mat2) # 5x5 cross-correlation matrix
+#'
+#' @seealso
+#' \code{\link{cor}} for Pearson's correlation coefficient,
+#' \code{\link{cor}} with \code{method = "spearman"} for Spearman's rank correlation,
+#' \code{\link{cor}} with \code{method = "kendall"} for Kendall's rank correlation,
+#' \code{\link{cov}} for covariance calculation
+#'
+#'
+#' @useDynLib recor, .registration = TRUE
+#' @importFrom Rcpp sourceCpp
 #' @export
-recor <- function(x, y, method = "cor_pearson") {
-    cor_value <- tryCatch(expr = {
-        numerator <- do.call(method, list(x = x, y = y))
-        if(covar(x, y) >= 0) {
-            denominator <- do.call(method,
-                                   list(x = Sort(x, descending = FALSE),
-                                        y = Sort(y, descending = FALSE)))
-        } else {
-            denominator <- do.call(method,
-                                   list(x = Sort(x, descending = FALSE),
-                                        y = Sort(y, descending = TRUE)))
+recor <- function(x, y = NULL) {
+    if (is.matrix(x) || is.data.frame(x)) {
+        x <- as.matrix(x)
+
+        if (is.null(y)) {
+            result <- recor_matrix(x)
+            if (!is.null(colnames(x))) {
+                rownames(result) <- colnames(x)
+                colnames(result) <- colnames(x)
+            }
+            return(result)
+        } else if (is.matrix(y) || is.data.frame(y)) {
+            y <- as.matrix(y)
+            result <- recor_matrix(x, y)
+            if (!is.null(colnames(x))) {
+                rownames(result) <- colnames(x)
+            }
+            if (!is.null(colnames(y))) {
+                colnames(result) <- colnames(y)
+            }
+            return(result)
         }
-        numerator / abs(denominator)
-    }, error = function(err) {NA})
-    return(cor_value)
+    }
+
+    if (is.null(y)) {
+        stop("The second argument y is required when the first argument x is a vector.")
+    }
+
+    if (length(x) != length(y)) {
+        stop("The lengths of input vectors x and y must be the same.")
+    }
+
+    if (length(x) < 2) {
+        stop("The length of x must be at least 2.")
+    }
+
+    recor_vector(x, y)
 }
