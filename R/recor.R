@@ -1,43 +1,41 @@
-#' Rearrangement Correlation (r#)
+#' Rearrangement Correlation (\eqn{r^\#})
 #'
 #' @description
-#' Computes the rearrangement correlation coefficient (r#), an adjusted version of Pearson's
+#' Computes the rearrangement correlation coefficient (\eqn{r^\#}), an adjusted version of Pearson's
 #' correlation coefficient that addresses the underestimation problem for monotonic dependence.
 #' This coefficient captures arbitrary monotone relationships (both linear and nonlinear) while
-#' reverting to Pearson's r in linear scenarios. The rearrangement correlation is derived from
+#' reverting to Pearson's \eqn{r} in linear scenarios. The rearrangement correlation is derived from
 #' a tighter inequality than the classical Cauchy-Schwarz inequality, providing sharper bounds
 #' and expanded capture range.
 #'
-#' @param x A numeric vector, matrix, or data frame.
-#' @param y NULL (default) or a vector, matrix, or data frame with compatible dimensions to x.
+#' @param x A numeric vector, matrix, or data.frame.
+#' @param y NULL (default) or a vector, matrix, or data.frame with compatible dimensions to x.
 #'
 #' @details
 #' The rearrangement correlation coefficient is based on rearrangement inequality theorems that
-#' provide tighter bounds than the Cauchy-Schwarz inequality. Mathematically, for samples x and y,
+#' provide tighter bounds than the Cauchy-Schwarz inequality. Mathematically, for samples \eqn{x} and \eqn{y},
 #' it is defined as:
 #'
-#' \deqn{r^\#(x, y) = \frac{s_{x,y}}{\left| s_{x^\uparrow, y^\ddagger} \right|}}
+#' \deqn{r^\#(x, y) = \frac{s_{x,y}}{\left| s_{x^\uparrow, y^\updownarrow} \right|}}
 #'
 #' where:
 #' \itemize{
-#'   \item \eqn{s_{x,y}} is the sample covariance between x and y
-#'   \item \eqn{x^\uparrow} is the increasing rearrangement of x
-#'   \item \eqn{y^\ddagger} is either \eqn{y^\uparrow} (increasing rearrangement) if \eqn{s_{x,y} \geq 0}
+#'   \item \eqn{s_{x,y}} is the sample covariance between \eqn{x} and \eqn{y}.
+#'   \item \eqn{x^\uparrow} is the increasing rearrangement of \eqn{x}.
+#'   \item \eqn{y^\updownarrow} is either \eqn{y^\uparrow} (increasing rearrangement) if \eqn{s_{x,y} \geq 0}
 #'         or \eqn{y^\downarrow} (decreasing rearrangement) if \eqn{s_{x,y} < 0}
 #' }
 #'
 #' Key properties of the rearrangement correlation:
 #' \itemize{
-#'   \item \eqn{|r^\#| \leq 1} with equality if and only if x and y are monotone dependent
-#'   \item \eqn{|r^\#| \geq |r|} with equality when y is a permutation of \eqn{ax + b}
-#'         (i.e., linear relationship)
-#'   \item More accurate than classical coefficients for nonlinear monotone dependence
-#'         (MAE = 0.060 in simulations)
-#'   \item Reverts to Pearson's r for linear relationships
-#'   \item Handles various input types consistently with \code{stats::cor()}
+#'   \item \eqn{|r^\#| \leq 1} with equality if and only if \eqn{x} and \eqn{y} are monotone dependent.
+#'   \item \eqn{|r^\#| \geq |r|} with equality when \eqn{y} is a permutation of \eqn{ax + b}
+#'         (i.e., linear relationship).
+#'   \item More accurate than classical coefficients for nonlinear monotone dependence.
+#'   \item Reverts to Pearson's \eqn{r} for linear relationships and to Spearman's \eqn{\rho} for rank data.
 #' }
 #'
-#' The function automatically handles different input combinations:
+#' The function automatically handles various input types consistently with \code{stats::cor()}:
 #' \itemize{
 #'   \item If x is a vector and y is a vector: returns a single correlation value
 #'   \item If x is a matrix/data.frame and y is NULL: returns correlation matrix between columns of x
@@ -65,8 +63,9 @@
 #'
 #' # Nonlinear monotone relationship
 #' x <- c(1, 2, 3, 4, 5)
-#' y <- c(1, 4, 9, 16, 25) # y = x^2
+#' y <- c(1, 8, 27, 65, 125) # y = x^3
 #' recor(x, y) # Higher value than Pearson's r
+#' cor(x, y)
 #'
 #' # Matrix example
 #' set.seed(123)
@@ -78,6 +77,9 @@
 #' mat1 <- matrix(rnorm(50), ncol = 5)
 #' mat2 <- matrix(rnorm(50), ncol = 5)
 #' recor(mat1, mat2) # 5x5 cross-correlation matrix
+#'
+#' # data.frame
+#' recor(iris[, 1:4]) # correlation matrix for iris dataset features
 #'
 #' @seealso
 #' \code{\link{cor}} for Pearson's correlation coefficient,
