@@ -8,7 +8,7 @@
 
 *recor* is an R package that implements the **Rearrangement Correlation Coefficient (r#)**, an adjusted version of Pearson's correlation coefficient designed to accurately measure arbitrary monotone dependence relationships (both linear and nonlinear). Based on cutting-edge statistical research, this package addresses the underestimation problem of traditional correlation coefficients in nonlinear monotone scenarios. The rearrangement correlation is derived from a tighter inequality than the classical Cauchy-Schwarz inequality, providing sharper bounds and expanded capture range.
 
-## Features
+## Features 
 
 - 🎯 **Extended Capture Range**: From linear to arbitrary monotone dependence.
 - 📊 **High Precision Measurement**: More accurate strength measurement than classical coefficients.
