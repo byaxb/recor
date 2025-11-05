@@ -49,7 +49,6 @@ set.seed(123)
 mat <- matrix(rnorm(100), ncol = 5)
 colnames(mat) <- LETTERS[1:5]
 recor(mat) # 5x5 correlation matrix
-> recor(mat) # 5x5 correlation matrix
 #>    A           B          C          D          E
 #> A  1.00000000 -0.09511994 -0.1283021  0.1243721 -0.2328551
 #> B -0.09511994  1.00000000  0.1022576  0.2381745  0.3780232
