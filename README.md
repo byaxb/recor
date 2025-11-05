@@ -84,7 +84,7 @@ recor(iris[, 1:4])
 The rearrangement correlation coefficient is based on rearrangement inequality theorems that provide tighter bounds than the Cauchy-Schwarz inequality. Mathematically, for samples $ x $ and $ y $, it is defined as:
 
 $$
-r^\#(x, y) = \frac{s_{x,y}}{\left| s_{x^\uparrow, y^\updownarrow} \right|}
+r^{\#}(x, y) = \frac{s_{x,y}}{\left| s_{x^\uparrow, y^\updownarrow} \right|}
 $$
 
 Where:
