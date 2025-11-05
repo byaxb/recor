@@ -169,7 +169,7 @@ It is to be noted that the above R implementation is for illustrative purposes o
 ### Intuitive Example
 To take a simple example, let $ x = (4, 3, 2, 1) $ and
 
-- $ y_1 = (5, 4, 3, 2) $ 
+- \eqn{ y_1 = (5, 4, 3, 2) } 
 - $ y_2 = (5, 4, 3, 3.25) $ 
 - $ y_3 = (5, 4, 3, 3.50) $
 - $ y_4 = (5, 4, 3, 3.75) $
