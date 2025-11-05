@@ -1,7 +1,7 @@
 # recor: Rearrangement Correlation Coefficient
 
 <div style="border: 2px solid #4CAF50; border-radius: 8px; padding: 12px; background-color: #f9f9f9;">
-**Pearson's \( r \) is undoubtedly the gold measure for linear dependence. Now, it might be the gold measure also for nonlinear monotone dependence, if adjusted.**  
+**Pearson's $ r $ is undoubtedly the gold measure for linear dependence. Now, it might be the gold measure also for nonlinear monotone dependence, if adjusted.**  
 </div>
 
 ## Overview
@@ -12,7 +12,7 @@
 
 - 🎯 **Extended Capture Range**: From linear to arbitrary monotone dependence.
 - 📊 **High Precision Measurement**: More accurate strength measurement than classical coefficients.
-- 🔄 **Backward Compatibility**: Reverts to Pearson's \( r \) in linear scenarios, and to Spearman's \( \rho \) when calculated on ranks. 
+- 🔄 **Backward Compatibility**: Reverts to Pearson's $ r $ in linear scenarios, and to Spearman's \( \rho \) when calculated on ranks. 
 - 🚀 **Efficient Implementation**: Optimized computation with C++ backend.
 - 📈 **Multiple Input Support**: Automatically handles various input types (vector, matrix, data.frame) consistently with ```stats::cor()```.
 
@@ -83,9 +83,9 @@ recor(iris[, 1:4])
 ### Mathematical Definition
 The rearrangement correlation coefficient is based on rearrangement inequality theorems that provide tighter bounds than the Cauchy-Schwarz inequality. Mathematically, for samples \( x \) and \( y \), it is defined as:
 
-\[
+$$
 r^\#(x, y) = \frac{s_{x,y}}{\left| s_{x^\uparrow, y^\updownarrow} \right|}
-\]
+$$
 
 Where:
 
