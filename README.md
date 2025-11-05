@@ -1,8 +1,6 @@
 # recor: Rearrangement Correlation Coefficient
 
-<div style="border: 2px solid #4CAF50; border-radius: 8px; padding: 12px; background-color: #f9f9f9;">
 **Pearson's r is undoubtedly the gold measure for linear dependence. Now, it might be the gold measure also for nonlinear monotone dependence, if adjusted.**  
-</div>
 
 ## Overview
 
