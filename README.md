@@ -2,6 +2,10 @@
 
 mathjax: true
 
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
 **Pearson's r is undoubtedly the gold measure for linear dependence. Now, it might be the gold measure also for nonlinear monotone dependence, if adjusted.**  
 
 ## Overview
