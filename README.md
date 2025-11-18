@@ -10,7 +10,7 @@
 
 - 🎯 **Extended Capture Range**: From linear to arbitrary monotone dependence.
 - 📊 **High Precision Measurement**: More accurate strength measurement than classical coefficients.
-- 🔄 **Backward Compatibility**: Reverts to Pearson's$r$in linear scenarios, and to Spearman's$\rho$when calculated on ranks. 
+- 🔄 **Backward Compatibility**: Reverts to Pearson's $ r $ in linear scenarios, and to Spearman's $ \rho $ when calculated on ranks. 
 - 🚀 **Efficient Implementation**: Optimized computation with C++ backend.
 - 📈 **Multiple Input Support**: Automatically handles various input types (vector, matrix, data.frame) consistently with ```stats::cor()```.
 
@@ -78,7 +78,7 @@ recor(iris[, 1:4])
 ## Theoretical Foundation
 
 ### Mathematical Definition
-The rearrangement correlation coefficient is based on rearrangement inequality theorems that provide tighter bounds than the Cauchy-Schwarz inequality. Mathematically, for samples$x$and$y$, it is defined as:
+The rearrangement correlation coefficient is based on rearrangement inequality theorems that provide tighter bounds than the Cauchy-Schwarz inequality. Mathematically, for samples $ x $ and $ y $, it is defined as:
 
 $$
 r^{\#}(x, y) = \frac{s_{x,y}}{\left| s_{x^\uparrow, y^\updownarrow} \right|}
@@ -86,12 +86,12 @@ $$
 
 Where:
 
--$s_{x,y}$is the sample covariance.
--$x^\uparrow$is the increasing rearrangement of$x$.
--$y^\updownarrow$is either$y^\uparrow$(increasing rearrangement of$y$) if$s_{x,y} \geq 0$or$y^\downarrow$(decreasing rearrangement of$y$) if$s_{x,y} < 0$.
+- $ s_{x,y} $ is the sample covariance.
+- $ x^\uparrow $ is the increasing rearrangement of $ x $.
+- $ y^\updownarrow $ is either $ y^\uparrow $ (increasing rearrangement of $ y $ ) if $ s_{x,y} \geq 0 $ or $ y^\downarrow $ (decreasing rearrangement of $ y $) if $ s_{x,y} < 0 $.
 
 ### R Implementation
-$r^\#$can be computed in R as follows:
+$ r^\# $ can be computed in R as follows:
 ```r
 recor <- function(x, y = NULL) {
     recor_vector <- function(x, y) {
@@ -164,17 +164,17 @@ recor <- function(x, y = NULL) {
 It is to be noted that the above R implementation is for illustrative purposes only. The actual *recor* package employs a highly optimized C++ backend to ensure efficient computation.
 
 ### Intuitive Example
-To take a simple example, let$x = (4, 3, 2, 1)$and
+To take a simple example, let $ x = (4, 3, 2, 1) $ and
 
--$y_1 = (5, 4, 3, 2) }$
--$y_2 = (5, 4, 3, 3.25)$
--$y_3 = (5, 4, 3, 3.50)$
--$y_4 = (5, 4, 3, 3.75)$
--$y_5 = (5, 4, 3, 4.50)$
+- $ y_1 = (5, 4, 3, 2) } $
+- $ y_2 = (5, 4, 3, 3.25) $ 
+- $ y_3 = (5, 4, 3, 3.50) $
+- $ y_4 = (5, 4, 3, 3.75) $
+- $ y_5 = (5, 4, 3, 4.50) $
 
-Obviously,$y_1$and$x$behaves exactly in the same way, with their values getting small and small step
-by step. The behavior of$y_2, y_3, y_4$and$y5$are becoming more and more different from that of$x$.
-However, the$\rho$values are all the same for$y_2, y_3, y_4$. In contrast, the$r^\#$values can reveal all
+Obviously, $ y_1 $ and $ x $ behaves exactly in the same way, with their values getting small and small step
+by step. The behavior of $ y_2, y_3, y_4 $ and $ y5 $ are becoming more and more different from that of $ x $.
+However, the $ \rho $ values are all the same for $ y_2, y_3, y_4 $. In contrast, the $ r^\# $ values can reveal all
 these differences exactly.
 ```r
 x <- c(4, 3, 2, 1) 
@@ -187,36 +187,36 @@ y_list <- list(y1 = c(5, 4, 3, 2.00),
 
 # recor
 lapply(y_list, recor, x)
-#>$y1
+#> $y1
 #> [1] 1
 #> 
-#>$y2
+#> $y2
 #> [1] 0.9259259
 #> 
-#>$y3
+#> $y3
 #> [1] 0.8461538
 #> 
-#>$y4
+#> $y4
 #> [1] 0.76
 #> 
-#>$y5
+#> $y5
 #> [1] 0.3846154
 
 #cor
 lapply(y_list, cor, x, method = "spearman")
-#>$y1
+#> $y1
 #> [1] 1
 #> 
-#>$y2
+#> $y2
 #> [1] 0.8
 #> 
-#>$y3
+#> $y3
 #> [1] 0.8
 #> 
-#>$y4
+#> $y4
 #> [1] 0.8
 #> 
-#>$y5
+#> $y5
 #> [1] 0.4
 ```
 
