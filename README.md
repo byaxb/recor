@@ -10,7 +10,7 @@
 
 - 🎯 **Extended Capture Range**: From linear to arbitrary monotone dependence.
 - 📊 **High Precision Measurement**: More accurate strength measurement than classical coefficients.
-- 🔄 **Backward Compatibility**: Reverts to Pearson's $ r $ in linear scenarios, and to Spearman's $ \rho $ when calculated on ranks. 
+- 🔄 **Backward Compatibility**: Reverts to Pearson's r in linear scenarios, and to Spearman's ρ when calculated on ranks. 
 - 🚀 **Efficient Implementation**: Optimized computation with C++ backend.
 - 📈 **Multiple Input Support**: Automatically handles various input types (vector, matrix, data.frame) consistently with ```stats::cor()```.
 
