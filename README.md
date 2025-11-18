@@ -1,12 +1,4 @@
----
-title: "recor: Rearrangement Correlation Coefficient"
-mathjax: true
----
-
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-
+# recor: Rearrangement Correlation Coefficient
 
 **Pearson's r is undoubtedly the gold measure for linear dependence. Now, it might be the gold measure also for nonlinear monotone dependence, if adjusted.**  
 
@@ -86,20 +78,19 @@ recor(iris[, 1:4])
 ## Theoretical Foundation
 
 ### Mathematical Definition
-The rearrangement correlation coefficient is based on rearrangement inequality theorems that provide tighter bounds than the Cauchy-Schwarz inequality. Mathematically, for samples $ x $ and $ y $, it is defined as:
+The rearrangement correlation coefficient is based on rearrangement inequality theorems that provide tighter bounds than the Cauchy-Schwarz inequality. Mathematically, for samples x and y, it is defined as:
 
-$$
-r^{\#}(x, y) = \frac{s_{x,y}}{\left| s_{x^\uparrow, y^\updownarrow} \right|}
-$$
+r#(x, y) = sₓᵧ / |sₓ↑, ᵧ↕|
 
 Where:
-
-- $ s_{x,y} $ is the sample covariance.
-- $ x^\uparrow $ is the increasing rearrangement of $ x $.
-- $ y^\updownarrow $ is either $ y^\uparrow $ (increasing rearrangement of $ y $ ) if $ s_{x,y} \geq 0 $ or $ y^\downarrow $ (decreasing rearrangement of $ y $) if $ s_{x,y} < 0 $.
+- `sₓᵧ` is the sample covariance between x and y
+- `x↑` denotes the increasing rearrangement of x
+- `y↕` denotes either:
+  - `y↑` (increasing rearrangement of y) if sₓᵧ ≥ 0
+  - `y↓` (decreasing rearrangement of y) if sₓᵧ < 0
 
 ### R Implementation
-$ r^\# $ can be computed in R as follows:
+r# can be computed in R as follows:
 ```r
 recor <- function(x, y = NULL) {
     recor_vector <- function(x, y) {
@@ -172,17 +163,17 @@ recor <- function(x, y = NULL) {
 It is to be noted that the above R implementation is for illustrative purposes only. The actual *recor* package employs a highly optimized C++ backend to ensure efficient computation.
 
 ### Intuitive Example
-To take a simple example, let $ x = (4, 3, 2, 1) $ and
+To take a simple example, let  x = (4, 3, 2, 1)  and
 
-- $ y_1 = (5, 4, 3, 2) } $
-- $ y_2 = (5, 4, 3, 3.25) $ 
-- $ y_3 = (5, 4, 3, 3.50) $
-- $ y_4 = (5, 4, 3, 3.75) $
-- $ y_5 = (5, 4, 3, 4.50) $
+- y1 = (5, 4, 3, 2)
+- y2 = (5, 4, 3, 3.25) 
+- y3 = (5, 4, 3, 3.50)
+- y4 = (5, 4, 3, 3.75)
+- y5 = (5, 4, 3, 4.50)
 
-Obviously, $ y_1 $ and $ x $ behaves exactly in the same way, with their values getting small and small step
-by step. The behavior of $ y_2, y_3, y_4 $ and $ y5 $ are becoming more and more different from that of $ x $.
-However, the $ \rho $ values are all the same for $ y_2, y_3, y_4 $. In contrast, the $ r^\# $ values can reveal all
+Obviously, y1 and x behaves exactly in the same way, with their values getting small and small step
+by step. The behavior of y2, y3, y4 and y5 are becoming more and more different from that of x.
+However, the rho values are all the same for y2, y3, y4. In contrast, the r# values can reveal all
 these differences exactly.
 ```r
 x <- c(4, 3, 2, 1) 
