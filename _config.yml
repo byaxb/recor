@@ -1,35 +1,20 @@
+# _config.yml - 基础配置
+title: "您的项目名称"
+description: "项目描述"
+theme: jekyll-theme-minimal
 
-# 构建设置
+# 数学公式支持配置
 markdown: kramdown
-highlighter: rouge
-permalink: pretty
-
-# 数学渲染设置
 kramdown:
   math_engine: mathjax
-  input: GFM
-  hard_wrap: false
   syntax_highlighter: rouge
 
-# 插件设置
-plugins:
-  - jekyll-feed
-  - jekyll-seo-tag
-  - jekyll-sitemap
-
-# 排除文件
+# 排除不需要处理的文件
 exclude:
-  - README.md
-  - LICENSE
-  - .gitignore
-
-
-# MathJax特定配置
-mathjax:
-  enable: true
-  config_file: false
-  process_escapes: true
-  tex2jax:
-    inlineMath: [ ['$','$'], ["\\(","\\)"] ]
-    displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
-    processEscapes: true
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
