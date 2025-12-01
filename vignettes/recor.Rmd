@@ -1,26 +1,22 @@
-# recor: Rearrangement Correlation Coefficient
+---
+title: "recor: Rearrangement Correlation Coefficient"
+output: html_document
+---
 
-<span style="background-color: #f0f0f0;">**Pearson's r is undoubtedly the gold measure for linear dependence. Now, it might be the gold measure also for nonlinear monotone dependence, if adjusted.**</span>  
+<span style="background-color: #f0f0f0;">**Pearson's $r$ is undoubtedly the gold measure for linear dependence. Now, it might be the gold measure also for nonlinear monotone dependence, if adjusted.**</span>  
 
 ## Overview
 
-*recor* is an R package that implements the **Rearrangement Correlation Coefficient (r#)**, an adjusted version of Pearson's correlation coefficient designed to accurately measure arbitrary monotone dependence relationships (both linear and nonlinear). Based on cutting-edge statistical research, this package addresses the underestimation problem of traditional correlation coefficients in nonlinear monotone scenarios. The rearrangement correlation is derived from a tighter inequality than the classical Cauchy-Schwarz inequality, providing sharper bounds and expanded capture range.
+*recor* is an R package that implements the **Rearrangement Correlation Coefficient ($r^\#$)**, an adjusted version of Pearson's correlation coefficient designed to accurately measure arbitrary monotone dependence relationships (both linear and nonlinear). Based on cutting-edge statistical research, this package addresses the underestimation problem of traditional correlation coefficients in nonlinear monotone scenarios. The rearrangement correlation is derived from a tighter inequality than the classical Cauchy-Schwarz inequality, providing sharper bounds and expanded capture range.
 
 ## Features 
 
 - 🎯 **Extended Capture Range**: From linear to arbitrary monotone dependence.
 - 📊 **High Precision Measurement**: More accurate strength measurement than classical coefficients.
-- 🔄 **Backward Compatibility**: Reverts to Pearson's r in linear scenarios, and to Spearman's ρ when calculated on ranks. 
+- 🔄 **Backward Compatibility**: Reverts to Pearson's $r$ in linear scenarios, and to Spearman's $\rho$ when calculated on ranks. 
 - 🚀 **Efficient Implementation**: Optimized computation with C++ backend.
 - 📈 **Multiple Input Support**: Automatically handles various input types (vector, matrix, data.frame) consistently with ```stats::cor()```.
 
-## Installation
-### Install from GitHub (Recommended)
-```r
-# Install devtools (if not already installed)
-install.packages("devtools")
-devtools::install_github("byaxb/recor")
-```
 
 ## Quick Start
 ### Basic Usage
@@ -78,19 +74,18 @@ recor(iris[, 1:4])
 ## Theoretical Foundation
 
 ### Mathematical Definition
-The rearrangement correlation coefficient is based on rearrangement inequality theorems that provide tighter bounds than the Cauchy-Schwarz inequality. Mathematically, for samples x and y, it is defined as:
+The rearrangement correlation coefficient is based on rearrangement inequality theorems that provide tighter bounds than the Cauchy-Schwarz inequality. Mathematically, for samples $x$ and $y$, it is defined as:
 
-r#(x, y) = sₓᵧ / |sₓ↑, ᵧ↕|
+${r^\# }\left( {x,y} \right) = \frac{{{s_{x,y}}}}{{\left| {{s_{{x^ \uparrow },{y^ \updownarrow }}}} \right|}}$
 
 Where:
-- `sₓᵧ` is the sample covariance between x and y
-- `x↑` denotes the increasing rearrangement of x
-- `y↕` denotes either:
-  - `y↑` (increasing rearrangement of y) if sₓᵧ ≥ 0
-  - `y↓` (decreasing rearrangement of y) if sₓᵧ < 0
+
+- ${{s_{x,y}}}$ is the sample covariance between $x$ and $y$
+- ${{x^ \uparrow }}$ denotes the increasing rearrangement of $x$
+- ${{y^ \updownarrow }}$ denotes either ${y^ \uparrow }$ (increasing rearrangement of $y$) if ${{s_{x,y}}} \ge 0$, or ${y^ \downarrow }$ (decreasing rearrangement of $y$) if ${{s_{x,y}}} < 0$.
 
 ### R Implementation
-r# can be computed in R as follows:
+${r^\# }$ can be computed in R as follows:
 ```r
 recor <- function(x, y = NULL) {
     recor_vector <- function(x, y) {
@@ -163,18 +158,16 @@ recor <- function(x, y = NULL) {
 It is to be noted that the above R implementation is for illustrative purposes only. The actual *recor* package employs a highly optimized C++ backend to ensure efficient computation.
 
 ### Intuitive Example
-Do we need a new monotone measure given that rank-based measures such as Spearman's ρ can already measure monotone dependence? The answser is YES in sense that r# has a higher resolution and is more accurate. To take a simple example, let  x = (4, 3, 2, 1)  and
+Do we need a new monotone measure given that rank-based measures such as Spearman's $\rho$ can already measure monotone dependence? The answser is YES in sense that r# has a higher resolution and is more accurate. To take a simple example, let  $x = (4, 3, 2, 1)$  and
 
-- y1 = (5, 4, 3, 2)
-- y2 = (5, 4, 3, 3.25) 
-- y3 = (5, 4, 3, 3.50)
-- y4 = (5, 4, 3, 3.75)
-- y5 = (5, 4, 3, 4.50)
+- $y_1 = (5, 4, 3, 2)$
+- $y_2 = (5, 4, 3, 3.25)$ 
+- $y_3 = (5, 4, 3, 3.50)$
+- $y_4 = (5, 4, 3, 3.75)$
+- $y_5 = (5, 4, 3, 4.50)$
 
-Obviously, y1 and x behaves exactly in the same way, with their values getting small and small step
-by step. The behavior of y2, y3, y4 and y5 are becoming more and more different from that of x.
-However, the rho values are all the same for y2, y3, y4. In contrast, the r# values can reveal all
-these differences exactly.
+Obviously, $y_1$ and $x$ behaves exactly in the same way, with their values getting small and small step
+by step. The behavior of $y_2, y_3, y_4$ and $y_5$ are becoming more and more different from that of $x$. However, the $\rho$ values are all the same for $y_2, y_3, y_4$. In contrast, the $r^\#$ values can reveal all these differences exactly.
 ```r
 x <- c(4, 3, 2, 1) 
 
