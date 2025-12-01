@@ -1,10 +1,10 @@
 Package: recor
 Type: Package
-Title: Rearrangement Correlation
+Title: Rearrangement Correlation Coefficient
 Version: 1.0.3
 Authors@R: person("Xinbo", "Ai", email = "axb@bupt.edu.cn", role = c("aut", "cre"))
-Description: recor is an R package that implements the Rearrangement Correlation Coefficient, an adjusted version of Pearson's correlation coefficient designed to accurately measure arbitrary monotone dependence relationships (both linear and nonlinear). Based on cutting-edge statistical research, this package addresses the underestimation problem of classical correlation coefficients in nonlinear monotone scenarios. The rearrangement correlation is derived from a tighter inequality than the classical Cauchy-Schwarz inequality, providing sharper bounds and expanded capture range.
-License: GPL (>= 2)
+Description: Calculate the Rearrangement Correlation Coefficient, an adjusted version of Pearson's correlation coefficient that accurately measures monotonic dependence relationships, including both linear and nonlinear associations. Addresses the underestimation problem of classical correlation coefficients in nonlinear monotonic scenarios through improved statistical bounds derived from rearrangement inequalities.
+License: GPL-3 | file LICENSE
 URL: https://github.com/byaxb/recor
 BugReports: https://github.com/byaxb/recor/issues
 Depends: R (>= 3.5.0)
