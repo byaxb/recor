@@ -163,7 +163,7 @@ recor <- function(x, y = NULL) {
 It is to be noted that the above R implementation is for illustrative purposes only. The actual *recor* package employs a highly optimized C++ backend to ensure efficient computation.
 
 ### Intuitive Example
-To take a simple example, let  x = (4, 3, 2, 1)  and
+Do we need a new monotone measure given that rank-based measures such as Spearman's ρ can already measure monotone dependence? The answser is YES in sense that r# has a higher resolution and is more accurate. To take a simple example, let  x = (4, 3, 2, 1)  and
 
 - y1 = (5, 4, 3, 2)
 - y2 = (5, 4, 3, 3.25) 
