@@ -16,3 +16,5 @@ src/*.dll
 
 # 文档生成临时文件
 man/.*.Rd
+/doc/
+/Meta/
