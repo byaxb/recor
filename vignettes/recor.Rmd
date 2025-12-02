@@ -1,10 +1,10 @@
 ---
-title: "recor Package Vignette"
+title: "recor: Rearrangement Correlation Coefficient"
 author: "Xinbo Ai"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{recor Package Vignette}
+  %\VignetteIndexEntry{recor: Rearrangement Correlation Coefficient}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -224,7 +224,7 @@ Ai, X. (2024). Adjust Pearson's r to Measure Arbitrary Monotone Dependence. In *
 
 ## License
 
-This project is licensed under GPL-3. See the [LICENSE](LICENSE) file for details.
+This project is licensed under GPL-3. 
 
 ## Support & Feedback
 
