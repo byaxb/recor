@@ -225,7 +225,7 @@ Ai, X. (2024). Adjust Pearson's r to Measure Arbitrary Monotone Dependence. In *
 
 ## License
 
-This project is licensed under GPL-3. See the [LICENSE](LICENSE) file for details.
+This project is licensed under GPL-3.0 License.
 
 ## Support & Feedback
 
