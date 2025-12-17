@@ -15,7 +15,13 @@
 - 📈 **Multiple Input Support**: Automatically handles various input types (vector, matrix, data.frame) consistently with ```stats::cor()```.
 
 ## Installation
-### Install from GitHub (Recommended)
+
+### Install from CRAN
+```r
+install.packages("recor")
+```
+
+### Install from GitHub
 ```r
 # Install devtools (if not already installed)
 install.packages("devtools")
